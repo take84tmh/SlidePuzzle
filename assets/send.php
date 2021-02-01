@@ -12,14 +12,12 @@ if (isset($data))
         $data[5] == '5' and
         $data[6] == '6' and
         $data[7] == '7') {
-        echo json_encode(1);
+        $result = 1;
     }
     else {
-        echo json_encode(0);
+        $result = 0;
     }
-  
-    // 接続を閉じる
-    $mysqli->close();
+    echo $result;
 }
 else
 {
