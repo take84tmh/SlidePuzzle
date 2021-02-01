@@ -132,12 +132,24 @@ $(function() {
                     text[6] + ", " +
                     text[7]};
 
-        $.post('../send.php', data, function(clear) {
-            if (clear) {
+        $.post('../send.php', data, function(result) {
+            if (result) {
                 image_num++;
                 image_change();
             }
         });
+
+        if ($data[0] == '0' &&
+            $data[1] == '1' &&
+            $data[2] == '2' &&
+            $data[3] == '3' &&
+            $data[4] == '4' &&
+            $data[5] == '5' &&
+            $data[6] == '6' &&
+            $data[7] == '7') {
+            image_num++;
+            image_change();
+        }
     }
 
     $('.navbar-brand').click(function(){
