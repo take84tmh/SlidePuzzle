@@ -1,0 +1,34 @@
+.start-btn {
+    padding: 20px 40px;
+    font-size: 48px;
+    border-radius: 100vh;
+    color: #fff;
+    background-color: #eb6100;
+}
+
+.start-btn:hover {
+    color: #fff;
+    background: #f56500;
+}
+
+#panel {
+    width: 460px;
+    height: 460px;
+    overflow: hidden;
+    display: block;
+    margin: 0 auto;
+}
+
+.tile {
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    border: 3px solid silver;
+    text-align: center;
+    font-size: 78px;
+    font-weight: bold;
+    box-shadow: gray 6px 6px;
+    float: left;
+    cursor: pointer;
+    background-size: cover;
+}
