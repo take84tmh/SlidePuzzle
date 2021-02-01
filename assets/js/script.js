@@ -132,7 +132,7 @@ $(function() {
                     text[6] + ", " +
                     text[7]};
 
-        $.post('url(assets/send.php)', data, function(clear) {
+        $.post('../send.php', data, function(clear) {
             if (clear) {
                 image_num++;
                 image_change();
