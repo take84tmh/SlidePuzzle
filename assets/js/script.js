@@ -143,7 +143,6 @@ $(function() {
                     text[6] + ", " +
                     text[7]};
 
-        console.log(data);
         $.post('../send.php', data, function(result) {
             console.log('recv : ' + result);
         });
