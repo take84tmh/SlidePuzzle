@@ -1,6 +1,7 @@
 $(function() {
     // グローバル
     var image_num = 0;
+    var difficulty = 0;
     tiles = [];
     var puzzle_image = [['url(assets/img/crossword_puzzle_man_1.png)',
                         'url(assets/img/crossword_puzzle_man_2.png)',
@@ -56,7 +57,7 @@ $(function() {
         var arr = ['0', '1', '2', '3', '4', '5', '6', '7', ''];
         
         // シャッフル
-        //shuffle(arr);
+        shuffle(arr);
 
         var panel = document.getElementById('panel');
         
@@ -87,9 +88,8 @@ $(function() {
         return arr;
     }
 
-    // タイルのtextContentを入れ替える
+    // タイルを入れ替える
     function swapContent(i, k){
-        
         var temp = tiles[i].textContent;
         tiles[i].textContent = tiles[k].textContent;
         tiles[k].textContent = temp;
@@ -99,7 +99,12 @@ $(function() {
 
     // クリック時の処理
     function click(e) {
-        
+        if (difficulty) {
+            for (i = 0; i < 9; i++) {
+                tiles[i].textContent = text[i];
+            }
+        }
+
         var i = e.target.index;
 
         if (i <= 5 && tiles[i + 3].textContent == '' ){
@@ -118,8 +123,14 @@ $(function() {
 
         text = [];
 
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < 9; i++) {
             text[i] = tiles[i].textContent;
+        }
+
+        if (difficulty) {
+            for (i = 0; i < 9; i++) {
+                tiles[i].textContent = '';
+            }
         }
 
         var data = {"data" :
@@ -132,11 +143,9 @@ $(function() {
                     text[6] + ", " +
                     text[7]};
 
+        console.log(data);
         $.post('../send.php', data, function(result) {
-            if (result) {
-                image_num++;
-                image_change();
-            }
+            console.log('recv : ' + result);
         });
 
         if (text[0] == '0' &&
@@ -147,8 +156,20 @@ $(function() {
             text[5] == '5' &&
             text[6] == '6' &&
             text[7] == '7') {
-            image_num++;
-            image_change();
+            alert('CLEAR!!');
+            if (image_num % 2 == 0) {
+                $('.difficulty').text("難易度：ふつう");
+                difficulty = 1;
+                image_num++;
+                image_change();
+                for (i = 0; i < 9; i++) {
+                    text[i] = tiles[i].textContent;
+                    tiles[i].textContent = '';
+                }
+            }
+            else {
+                alert('この先は有料です。');
+            }
         }
     }
 
@@ -166,21 +187,6 @@ $(function() {
         }, 500);
     })
 
-    $('.Irasutoya').click(function(){
-        image_num = 0;
-        image_change();
-    });
-
-    $('.Pokemon').click(function(){
-        image_num = 2;
-        image_change();
-    });
-
-    $('.MrSuzuki').click(function(){
-        image_num = 4;
-        image_change();
-    });
-
     function image_change(){
         var arr = ['0', '1', '2', '3', '4', '5', '6', '7', ''];
         shuffle(arr);
@@ -194,4 +200,25 @@ $(function() {
             }
         }
     }
+
+    $('.Irasutoya').click(function(){
+        $('.difficulty').text("難易度：かんたん");
+        difficulty = 0;
+        image_num = 0;
+        image_change();
+    });
+
+    $('.Pokemon').click(function(){
+        $('.difficulty').text("難易度：かんたん");
+        difficulty = 0;
+        image_num = 2;
+        image_change();
+    });
+
+    $('.MrSuzuki').click(function(){
+        $('.difficulty').text("難易度：かんたん");
+        difficulty = 0;
+        image_num = 4;
+        image_change();
+    });
 });
